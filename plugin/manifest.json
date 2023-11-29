@@ -1,0 +1,83 @@
+{
+  "id": "hello.dcsms.psdtools-revamped",
+  "name": "PSDTools Revamped",
+  "version": "0.0.1",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "data": {
+    "apiVersion": 2
+  },
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "24.4"
+    }
+  ],
+  "requiredPermissions": {
+    "localFileSystem": "fullAccess",
+    "clipboard": "readAndWrite",
+    "network": {
+      "domains": "all"
+    },
+    "webview": {
+      "allow": "yes",
+      "domains": ["https://*.adobe.com", "https://*.google.com"]
+    },
+    "allowCodeGenerationFromStrings": true,
+    "launchProcess": {
+      "schemes": ["http", "https"],
+      "extensions": [".svg", ".png"]
+    }
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "mainpanel",
+      "label": {
+        "default": "ComfyShop!!!"
+      },
+      "minimumSize": {
+        "width": 350,
+        "height": 300
+      },
+      "maximumSize": {
+        "width": 350,
+        "height": 1500
+      },
+      "preferredDockedSize": {
+        "width": 350,
+        "height": 300
+      },
+      "preferredFloatingSize": {
+        "width": 350,
+        "height": 590
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/icon.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark", "medium"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/icon.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"]
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "width": 48,
+      "height": 48,
+      "path": "icons/icon.png",
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium", "lightest", "light", "all"],
+      "species": ["pluginList"]
+    }
+  ]
+}

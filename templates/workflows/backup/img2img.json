@@ -1,0 +1,209 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "epicphotogasm_z-inpainting.safetensors",
+      "config_name": "Default",
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors",
+      "clip_skip": -1,
+      "lora1_name": "lcm_sd15_pytorch_lora_weights.safetensors",
+      "lora1_model_strength": 1,
+      "lora1_clip_strength": 1,
+      "lora2_name": "None",
+      "lora2_model_strength": 1,
+      "lora2_clip_strength": 1,
+      "lora3_name": "None",
+      "lora3_model_strength": 1,
+      "lora3_clip_strength": 1,
+      "positive": "two men, arguing",
+      "positive_token_normalization": "none",
+      "positive_weight_interpretation": "comfy",
+      "negative": "embedding:epiCPhotoGasm-colorfulPhoto-neg, text, watermark, cartoon, cgi, render, illustration, painting, drawing",
+      "negative_token_normalization": "none",
+      "negative_weight_interpretation": "comfy",
+      "empty_latent_width": 512,
+      "empty_latent_height": 768,
+      "batch_size": 1,
+      "seed": [
+        "88",
+        0
+      ]
+    },
+    "show": true,
+    "title": "MainLoader",
+    "class_type": "ttN pipeLoader"
+  },
+  "88": {
+    "inputs": {
+      "seed": 0
+    },
+    "show": true,
+    "title": "Seed",
+    "class_type": "CR Seed"
+  },
+  "104": {
+    "inputs": {
+      "sampling": "lcm",
+      "zsnr": false,
+      "model": [
+        "1",
+        1
+      ]
+    },
+    "show": false,
+    "title": "ModelSamplingDiscrete",
+    "class_type": "ModelSamplingDiscrete"
+  },
+  "117": {
+    "inputs": {
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "upscale_method": "None",
+      "factor": 2,
+      "crop": "disabled",
+      "sampler_state": "Sample",
+      "steps": 4,
+      "cfg": 1.3,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.01,
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "seed": 8391573504751581,
+      "pipe": [
+        "1",
+        0
+      ],
+      "optional_model": [
+        "161",
+        0
+      ],
+      "optional_latent": [
+        "123",
+        0
+      ]
+    },
+    "show": true,
+    "title": "pipeKSampler",
+    "class_type": "ttN pipeKSampler"
+  },
+  "121": {
+    "inputs": {
+      "filename_prefix": "Outpainting",
+      "images": [
+        "157",
+        0
+      ]
+    },
+    "show": true,
+    "title": "Save Image",
+    "class_type": "SaveImage"
+  },
+  "123": {
+    "inputs": {
+      "pixels": [
+        "179",
+        0
+      ],
+      "vae": [
+        "1",
+        5
+      ]
+    },
+    "show": false,
+    "title": "VAE Encode",
+    "class_type": "VAEEncode"
+  },
+  "157": {
+    "inputs": {
+      "enabled": true,
+      "swap_model": "inswapper_128.onnx",
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "GFPGANv1.4.pth",
+      "detect_gender_source": "no",
+      "detect_gender_input": "no",
+      "source_faces_index": "0,1",
+      "input_faces_index": "0,1",
+      "console_log_level": 0,
+      "input_image": [
+        "117",
+        7
+      ],
+      "source_image": [
+        "179",
+        0
+      ]
+    },
+    "show": true,
+    "title": "ReActor - Fast Face Swap",
+    "class_type": "ReActorFaceSwap"
+  },
+  "158": {
+    "inputs": {
+      "weight": 0.9500000000000001,
+      "noise": 0.33,
+      "weight_type": "channel penalty",
+      "ipadapter": [
+        "159",
+        0
+      ],
+      "clip_vision": [
+        "160",
+        0
+      ],
+      "image": [
+        "179",
+        0
+      ],
+      "model": [
+        "104",
+        0
+      ]
+    },
+    "show": true,
+    "title": "Apply IPAdapter",
+    "class_type": "IPAdapterApply"
+  },
+  "159": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus-face_sd15.bin"
+    },
+    "show": true,
+    "title": "Load IPAdapter Model",
+    "class_type": "IPAdapterModelLoader"
+  },
+  "160": {
+    "inputs": {
+      "clip_name": "model_sd15_ipadapter_plus_clipvision.safetensors"
+    },
+    "show": false,
+    "title": "Load CLIP Vision",
+    "class_type": "CLIPVisionLoader"
+  },
+  "161": {
+    "inputs": {
+      "b1": 1.3,
+      "b2": 1.4,
+      "s1": 0.9,
+      "s2": 0.2,
+      "model": [
+        "158",
+        0
+      ]
+    },
+    "show": false,
+    "title": "FreeU_V2",
+    "class_type": "FreeU_V2"
+  },
+  "179": {
+    "inputs": {
+      "image": "Load Image_ux6hg.png",
+      "method": "height",
+      "value": 512,
+      "choose file to upload": "image"
+    },
+    "show": true,
+    "title": "Load and Resize Image with Mask",
+    "class_type": "LoadResizeImageMask"
+  }
+}

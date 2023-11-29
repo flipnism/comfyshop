@@ -1,0 +1,225 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "juggernaut_aftermath.safetensors",
+      "config_name": "Default",
+      "vae_name": "Baked VAE",
+      "clip_skip": -1,
+      "lora1_name": "lcm_sd15_pytorch_lora_weights.safetensors",
+      "lora1_model_strength": 1,
+      "lora1_clip_strength": 1,
+      "lora2_name": "None",
+      "lora2_model_strength": 0.3,
+      "lora2_clip_strength": 1,
+      "lora3_name": "None",
+      "lora3_model_strength": 1,
+      "lora3_clip_strength": 1,
+      "positive": "2 men arguing inside of a dark room",
+      "positive_token_normalization": "none",
+      "positive_weight_interpretation": "comfy",
+      "negative": "embedding:JuggernautNegative-neg",
+      "negative_token_normalization": "none",
+      "negative_weight_interpretation": "comfy",
+      "empty_latent_width": [
+        "43",
+        2
+      ],
+      "empty_latent_height": [
+        "43",
+        1
+      ],
+      "batch_size": 1,
+      "seed": 0
+    },
+    "show": false,
+    "title": "pipeLoader",
+    "class_type": "ttN pipeLoader"
+  },
+  "2": {
+    "inputs": {
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "upscale_method": "None",
+      "factor": 2,
+      "crop": "disabled",
+      "sampler_state": "Sample",
+      "steps": 4,
+      "cfg": 1.3,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 1,
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "seed": 487266041486193,
+      "pipe": [
+        "1",
+        0
+      ],
+      "optional_model": [
+        "39",
+        0
+      ],
+      "optional_positive": [
+        "40",
+        0
+      ]
+    },
+    "show": false,
+    "title": "pipeKSampler",
+    "class_type": "ttN pipeKSampler"
+  },
+  "39": {
+    "inputs": {
+      "sampling": "lcm",
+      "zsnr": false,
+      "model": [
+        "45",
+        0
+      ]
+    },
+    "show": false,
+    "title": "ModelSamplingDiscrete",
+    "class_type": "ModelSamplingDiscrete"
+  },
+  "40": {
+    "inputs": {
+      "strength": 1,
+      "conditioning": [
+        "1",
+        2
+      ],
+      "control_net": [
+        "42",
+        0
+      ],
+      "image": [
+        "44",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Apply ControlNet",
+    "class_type": "ControlNetApply"
+  },
+  "41": {
+    "inputs": {
+      "image": "Load Image_piapi.png",
+      "choose file to upload": "image"
+    },
+    "show": true,
+    "title": "Load Image",
+    "class_type": "LoadImage"
+  },
+  "42": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_inpaint.pth"
+    },
+    "show": false,
+    "title": "Load ControlNet Model",
+    "class_type": "ControlNetLoader"
+  },
+  "43": {
+    "inputs": {
+      "value": [
+        "41",
+        0
+      ]
+    },
+    "show": false,
+    "title": "ImpactImageInfo",
+    "class_type": "ImpactImageInfo"
+  },
+  "44": {
+    "inputs": {
+      "image": [
+        "41",
+        0
+      ],
+      "mask": [
+        "41",
+        1
+      ]
+    },
+    "show": false,
+    "title": "Inpaint Preprocessor",
+    "class_type": "InpaintPreprocessor"
+  },
+  "45": {
+    "inputs": {
+      "weight": 1,
+      "noise": 0,
+      "weight_type": "original",
+      "ipadapter": [
+        "46",
+        0
+      ],
+      "clip_vision": [
+        "47",
+        0
+      ],
+      "image": [
+        "49",
+        0
+      ],
+      "model": [
+        "1",
+        1
+      ]
+    },
+    "show": false,
+    "title": "Apply IPAdapter",
+    "class_type": "IPAdapterApply"
+  },
+  "46": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus_sd15.bin"
+    },
+    "show": false,
+    "title": "Load IPAdapter Model",
+    "class_type": "IPAdapterModelLoader"
+  },
+  "47": {
+    "inputs": {
+      "clip_name": "model_sd15_ipadapter_plus_clipvision.safetensors"
+    },
+    "show": false,
+    "title": "Load CLIP Vision",
+    "class_type": "CLIPVisionLoader"
+  },
+  "48": {
+    "inputs": {
+      "image": "BG_bgglq.png",
+      "choose file to upload": "image"
+    },
+    "show": true,
+    "title": "BG",
+    "class_type": "LoadImage"
+  },
+  "49": {
+    "inputs": {
+      "interpolation": "LANCZOS",
+      "crop_position": "center",
+      "sharpening": 0,
+      "image": [
+        "48",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Prepare Image For Clip Vision",
+    "class_type": "PrepImageForClipVision"
+  },
+  "50": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "2",
+        7
+      ]
+    },
+    "show": false,
+    "title": "Save Image",
+    "class_type": "SaveImage"
+  }
+}

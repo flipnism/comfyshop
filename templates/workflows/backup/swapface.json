@@ -1,0 +1,362 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "epicphotogasm_z-inpainting.safetensors",
+      "config_name": "Default",
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors",
+      "clip_skip": -1,
+      "lora1_name": "lcm_sd15_pytorch_lora_weights.safetensors",
+      "lora1_model_strength": 1,
+      "lora1_clip_strength": 1,
+      "lora2_name": "LowRA.safetensors",
+      "lora2_model_strength": 0.3,
+      "lora2_clip_strength": 1,
+      "lora3_name": "None",
+      "lora3_model_strength": 1,
+      "lora3_clip_strength": 1,
+      "positive": "a woman",
+      "positive_token_normalization": "none",
+      "positive_weight_interpretation": "comfy",
+      "negative": "nsfw, text, watermark, blurry, embedding:bad-hands-5, cleavage",
+      "negative_token_normalization": "none",
+      "negative_weight_interpretation": "comfy",
+      "empty_latent_width": 512,
+      "empty_latent_height": 768,
+      "batch_size": 1,
+      "seed": [
+        "88",
+        0
+      ]
+    },
+    "show": true,
+    "title": "MainLoader",
+    "class_type": "ttN pipeLoader"
+  },
+  "2": {
+    "inputs": {
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "upscale_method": "None",
+      "factor": 2,
+      "crop": "disabled",
+      "sampler_state": "Sample",
+      "add_noise": "enable",
+      "steps": 6,
+      "cfg": 1.3,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "start_at_step": 0,
+      "end_at_step": 6,
+      "return_with_leftover_noise": "disable",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "noise_seed": [
+        "88",
+        0
+      ],
+      "pipe": [
+        "1",
+        0
+      ],
+      "optional_model": [
+        "72",
+        0
+      ],
+      "optional_positive": [
+        "81",
+        0
+      ]
+    },
+    "show": false,
+    "title": "FeedModelToMe",
+    "class_type": "ttN pipeKSamplerAdvanced"
+  },
+  "19": {
+    "inputs": {
+      "enabled": true,
+      "swap_model": "inswapper_128.onnx",
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "GFPGANv1.4.pth",
+      "detect_gender_source": "no",
+      "detect_gender_input": "no",
+      "source_faces_index": "0",
+      "input_faces_index": "0",
+      "console_log_level": 0,
+      "input_image": [
+        "2",
+        7
+      ],
+      "source_image": [
+        "71",
+        0
+      ]
+    },
+    "show": false,
+    "title": "ReActor - Fast Face Swap",
+    "class_type": "ReActorFaceSwap"
+  },
+  "26": {
+    "inputs": {
+      "pixels": [
+        "19",
+        0
+      ],
+      "vae": [
+        "2",
+        5
+      ]
+    },
+    "show": false,
+    "title": "VAE Encode",
+    "class_type": "VAEEncode"
+  },
+  "28": {
+    "inputs": {
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "upscale_method": "None",
+      "factor": 2,
+      "crop": "disabled",
+      "sampler_state": "Sample",
+      "steps": 4,
+      "cfg": 1.3,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.01,
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "seed": [
+        "88",
+        0
+      ],
+      "pipe": [
+        "2",
+        0
+      ],
+      "optional_model": [
+        "1",
+        1
+      ],
+      "optional_latent": [
+        "26",
+        0
+      ]
+    },
+    "show": false,
+    "title": "pipeKSampler",
+    "class_type": "ttN pipeKSampler"
+  },
+  "68": {
+    "inputs": {
+      "weight": 0.75,
+      "noise": 0.3,
+      "weight_type": "original",
+      "ipadapter": [
+        "69",
+        0
+      ],
+      "clip_vision": [
+        "70",
+        0
+      ],
+      "image": [
+        "75",
+        0
+      ],
+      "model": [
+        "102",
+        0
+      ]
+    },
+    "show": true,
+    "title": "StyleAdapter",
+    "class_type": "IPAdapterApply"
+  },
+  "69": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus_sd15.bin"
+    },
+    "show": false,
+    "title": "Load IPAdapter Model",
+    "class_type": "IPAdapterModelLoader"
+  },
+  "70": {
+    "inputs": {
+      "clip_name": "model_sd15_ipadapter_plus_clipvision.safetensors"
+    },
+    "show": false,
+    "title": "Load CLIP Vision",
+    "class_type": "CLIPVisionLoader"
+  },
+  "71": {
+    "inputs": {
+      "image": "FaceImage_qmilqi.png",
+      "choose file to upload": "image"
+    },
+    "instant_generate": true,
+    "show": true,
+    "title": "FaceImage",
+    "class_type": "LoadImage"
+  },
+  "72": {
+    "inputs": {
+      "weight": 0.75,
+      "noise": 0.33,
+      "weight_type": "original",
+      "ipadapter": [
+        "73",
+        0
+      ],
+      "clip_vision": [
+        "70",
+        0
+      ],
+      "image": [
+        "71",
+        0
+      ],
+      "model": [
+        "68",
+        0
+      ]
+    },
+    "show": true,
+    "title": "FaceAdapter",
+    "class_type": "IPAdapterApply"
+  },
+  "73": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus-face_sd15.bin"
+    },
+    "show": false,
+    "title": "Load IPAdapter Model",
+    "class_type": "IPAdapterModelLoader"
+  },
+  "75": {
+    "inputs": {
+      "image": "StyleImage_xckkd.png",
+      "choose file to upload": "image"
+    },
+    "show": true,
+    "title": "StyleImage",
+    "class_type": "LoadImage"
+  },
+  "80": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "98",
+        0
+      ]
+    },
+    "show": true,
+    "title": "Output",
+    "class_type": "SaveImage"
+  },
+  "81": {
+    "inputs": {
+      "strength": 0.8,
+      "conditioning": [
+        "1",
+        2
+      ],
+      "control_net": [
+        "82",
+        0
+      ],
+      "image": [
+        "83",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Apply ControlNet",
+    "class_type": "ControlNetApply"
+  },
+  "82": {
+    "inputs": {
+      "control_net_name": "t2iadapter_openpose_sd14v1.pth"
+    },
+    "show": false,
+    "title": "Load ControlNet Model",
+    "class_type": "ControlNetLoader"
+  },
+  "83": {
+    "inputs": {
+      "detect_hand": "enable",
+      "detect_body": "enable",
+      "detect_face": "disable",
+      "resolution": 512,
+      "image": [
+        "75",
+        0
+      ]
+    },
+    "show": false,
+    "title": "OpenPose Pose Recognition",
+    "class_type": "OpenposePreprocessor"
+  },
+  "88": {
+    "inputs": {
+      "seed": 3310645320428191
+    },
+    "show": true,
+    "title": "Seed",
+    "class_type": "CR Seed"
+  },
+  "93": {
+    "inputs": {
+      "radius": 1.41,
+      "strength": 0.25,
+      "images": [
+        "28",
+        7
+      ]
+    },
+    "show": false,
+    "title": "VividSharpen",
+    "class_type": "VividSharpen"
+  },
+  "98": {
+    "inputs": {
+      "black_level": 28.5,
+      "mid_level": 249.70000000000002,
+      "white_level": 243.70000000000002,
+      "image": [
+        "93",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Image Levels Adjustment",
+    "class_type": "Image Levels Adjustment"
+  },
+  "102": {
+    "inputs": {
+      "b1": 1.3,
+      "b2": 1.4,
+      "s1": 0.9,
+      "s2": 0.2,
+      "model": [
+        "1",
+        1
+      ]
+    },
+    "show": false,
+    "title": "FreeU_V2",
+    "class_type": "FreeU_V2"
+  },
+  "103": {
+    "inputs": {
+      "images": [
+        "19",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Preview Image",
+    "class_type": "PreviewImage"
+  }
+}

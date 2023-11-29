@@ -1,0 +1,43 @@
+{
+  "184": {
+    "inputs": {
+      "image": "Load and Resize Image with Mask [512]_0to5b.png",
+      "value": 512,
+      "choose file to upload": "image"
+    },
+    "instant_generate": true,
+    "show": true,
+    "title": "Load and Resize Image with Mask [512]",
+    "class_type": "LoadResizeImageMask512"
+  },
+  "185": {
+    "inputs": {
+      "restore_faces": true,
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "GFPGANv1.4.pth",
+      "centerface_only": true,
+      "upscale": true,
+      "upscale_model_name": "001_classicalSR_DIV2K_s48w8_SwinIR-M_x2.pth",
+      "scale_restore": false,
+      "input_image": [
+        "184",
+        0
+      ]
+    },
+    "show": true,
+    "title": "FaceRestore & Scale",
+    "class_type": "RestoreAndScale"
+  },
+  "186": {
+    "inputs": {
+      "filename_prefix": "FACERESTORE",
+      "images": [
+        "185",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Save Image",
+    "class_type": "SaveImage"
+  }
+}
