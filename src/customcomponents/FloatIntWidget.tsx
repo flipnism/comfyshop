@@ -31,7 +31,7 @@ export const FloatIntWidget = (props: Props) => {
       <Textfield
         quiet={true}
         type="number"
-        className="w-1/4"
+        className="w-1/12"
         value={val}
         onChange={(e) => {
           let return_value = Number(e.target.value);

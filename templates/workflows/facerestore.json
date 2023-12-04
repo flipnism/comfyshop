@@ -1,43 +1,41 @@
 {
-  "184": {
+  "337": {
     "inputs": {
-      "image": "Load and Resize Image with Mask [512]_0to5b.png",
-      "value": 512,
+      "image": "BaseImage_q585s.png",
       "choose file to upload": "image"
     },
-    "instant_generate": true,
     "show": true,
-    "title": "Load and Resize Image with Mask [512]",
-    "class_type": "LoadResizeImageMask512"
+    "title": "BaseImage",
+    "class_type": "LoadImage"
   },
-  "185": {
+  "340": {
     "inputs": {
-      "restore_faces": true,
-      "facedetection": "retinaface_resnet50",
-      "face_restore_model": "GFPGANv1.4.pth",
-      "centerface_only": true,
-      "upscale": true,
-      "upscale_model_name": "001_classicalSR_DIV2K_s48w8_SwinIR-M_x2.pth",
-      "scale_restore": false,
-      "input_image": [
-        "184",
-        0
-      ]
-    },
-    "show": true,
-    "title": "FaceRestore & Scale",
-    "class_type": "RestoreAndScale"
-  },
-  "186": {
-    "inputs": {
-      "filename_prefix": "FACERESTORE",
+      "filename_prefix": "ComfyUI",
       "images": [
-        "185",
+        "341",
         0
       ]
     },
     "show": false,
     "title": "Save Image",
     "class_type": "SaveImage"
+  },
+  "341": {
+    "inputs": {
+      "model_name": "GFPGANv1.4.pth",
+      "facedetection": "retinaface_resnet50",
+      "codeformer_fidelity": 1,
+      "centerface_only": true,
+      "upscale": false,
+      "upscale_then_restore": true,
+      "upscale_model_name": "RealESRGAN_x4.pth",
+      "image": [
+        "337",
+        0
+      ]
+    },
+    "show": true,
+    "title": "FaceRestoreCFRevamped",
+    "class_type": "FaceRestoreCFRevamped"
   }
 }

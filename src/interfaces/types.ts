@@ -48,3 +48,15 @@ export type InlineDialogContent = {
   onOk?: (e: string) => void;
   onCancel?: (e: string) => void;
 };
+
+export type GLOBALCONFIG = {
+  imageloader_node: string[];
+};
+export type CUSTOMSCRIPT = {
+  name: string;
+  desc?: string;
+  icon_path: string;
+  executable?: boolean;
+  script?: string;
+  func: any;
+};

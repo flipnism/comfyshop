@@ -44,6 +44,7 @@
     "random": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-onclickoutside": "^6.13.0",
     "react-paginate": "^8.2.0",
     "react-use-websocket": "^4.4.0",
     "sval": "^0.4.8",

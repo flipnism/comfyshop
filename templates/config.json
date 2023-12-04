@@ -1,0 +1,14 @@
+{
+  "imageloader_node": ["LoadImage", "BGImage", "Load Image", "Baseimage", "LoadResizeImageMask", "LoadResizeImageMask512", "Image"],
+  "quickpanel_size": [
+    [512, 512],
+    [512, 768],
+    [768, 768],
+    [640, 832],
+    [832, 640],
+    [912, 512],
+    [512, 912],
+    [720, 720],
+    [1280, 720]
+  ]
+}

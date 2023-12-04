@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 
 export namespace Spectrum {
   export type TextareaType = 'number' | 'password' | 'search';
   export interface TextareaEvent extends globalThis.Event {
-    readonly target: (EventTarget & { value: string }) | null;
+    readonly target: (EventTarget & {value: string}) | null;
   }
 }
 
@@ -14,6 +14,7 @@ type Props = {
   onChange?: (e: Spectrum.TextareaEvent) => void;
   onInput?: (e: Spectrum.TextareaEvent) => void;
   onMouseLeave?: (e: Spectrum.TextareaEvent) => void;
+  onMouseEnter?: (e: Spectrum.TextareaEvent) => void;
   onBlur?: (e: Spectrum.TextareaEvent) => void;
   className?: string;
   disabled?: boolean;
@@ -75,6 +76,16 @@ export default function Textarea(props: Props) {
       ref.current?.removeEventListener('input', dispatchInput);
     };
   }, [props.onInput]);
+  useEffect(() => {
+    const dispatchInput = (e: Event) => {
+      ref.current?.focus();
+    };
+
+    ref.current?.addEventListener('mouseenter', dispatchInput);
+    return () => {
+      ref.current?.removeEventListener('mouseenter', dispatchInput);
+    };
+  }, [props.onMouseEnter]);
   useEffect(() => {
     const dispatchInput = (e: Event) => props.onMouseLeave?.(e as Spectrum.TextareaEvent);
 

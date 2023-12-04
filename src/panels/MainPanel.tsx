@@ -7,7 +7,7 @@ import DropDrownPicker from '../customcomponents/DropDownPicker';
 import {HeroIcons} from '../interfaces/HeroIcons';
 import {croppedSelectedLayer, downloadImage, isValidUrl, placeImageOnCanvas, saveSelectedLayerToImage, saveSelectionToImage} from '../utils/BPUtils';
 import MTextArea from '../customcomponents/MTextArea';
-import {BOUNDS, InlineDialogContent, NODETYPE, STATE, listItems} from '../interfaces/types';
+import {BOUNDS, GLOBALCONFIG, InlineDialogContent, NODETYPE, STATE, listItems} from '../interfaces/types';
 import {
   InterruptServer,
   _arrayBufferToBase64,
@@ -28,10 +28,9 @@ import {ActionDescriptor} from 'photoshop/dom/CoreModules';
 import {pickBy} from 'lodash';
 import WorkflowPicker from '../customcomponents/WorkflowPicker';
 const fs = require('uxp').storage.localFileSystem;
-
+const imageloader_node = ['LoadImage', 'Load Image', 'BaseImage', 'LoadResizeImageMask', 'LoadResizeImageMask512', 'LoadImageFace', 'Image'];
 export const MainPanel = () => {
   const [previewImage, setPreviewImage] = useState(['./icons/preview.png']);
-
   const [uuid, setUuid] = useState(uuidv4());
   const WS = (url: string, callback) => {
     return useWebSocket(url, {
@@ -43,16 +42,16 @@ export const MainPanel = () => {
       },
     });
   };
+  const [baseImage, setBaseImage] = useState(null);
   const [WF, setWF] = useState<any>();
   const [cardInfo, setCardInfo] = useState({});
   const [showcard, setShowCard] = useState({});
   const [instaGenerate, setInstaGenerate] = useState({is_instant: false, node_title: null, keyname: null});
+  const [globalConfig, setGlobalConfig] = useState<GLOBALCONFIG>(null);
 
-  const [activeTab, setActiveTab] = useState(-1);
   const [hideallCard, setHideAllCard] = useState({});
   const [btnState, setBtnState] = useState<STATE>(STATE.disable);
   const [items, setItems] = useState<listItems[]>([]);
-  const ImageLoaderNode = ['LoadImage', 'LoadResizeImageMask', 'LoadResizeImageMask512', 'LoadImageFace', 'Image'];
   const SeedWidgetRef = useRef(null);
   const [bounds, setBounds] = useState<BOUNDS>({left: 0, top: 0, right: 0, bottom: 0});
   const [selectedLayerBounds, setselectedLayerBounds] = useState<BOUNDS>({left: 0, top: 0, right: 0, bottom: 0});
@@ -81,6 +80,7 @@ export const MainPanel = () => {
   const comfyui_server = WS('ws://127.0.0.1:8188/ws?clientId=' + uuid, (result) => {
     //setSOpen(result);
   });
+
   useEffect(() => {
     const _bounds = bounds.left == 0 && bounds.right == 0 ? {left: 0, top: 0, right: app?.activeDocument?.width, bottom: app?.activeDocument?.height} : bounds;
     if (!comfyui_server.lastJsonMessage) return;
@@ -141,6 +141,7 @@ export const MainPanel = () => {
       console.log(error);
     }
   }, [comfyui_server.lastJsonMessage]);
+
   useEffect(() => {
     if (!comfyui_server.lastMessage) return;
     if (typeof comfyui_server.lastMessage.data === 'object') {
@@ -154,16 +155,19 @@ export const MainPanel = () => {
     if (!rootFolder) return;
 
     rootFolder.getEntry('ComfyUI').then(async (comfyui_root) => {
-      console.log(comfyui_root);
+    
       const input = await comfyui_root?.getEntry('input');
       const output = await comfyui_root?.getEntry('output');
 
       setIOFolder({input: input, output: output});
     });
+    rootFolder.getEntry('config.json').then(async (config_file) => {
+      setGlobalConfig(JSON.parse(await config_file.read()));
+    });
     rootFolder.getEntry('workflows').then((workflow_folder) => {
       setWorkflows(workflow_folder);
       workflow_folder.getEntries().then((r) => {
-        setWorkflowFiles(Object.values(r).filter((e) => e.isFile));
+        setWorkflowFiles(Object.values(r).filter((e: any) => e.isFile));
       });
     });
   }, [rootFolder]);
@@ -191,7 +195,7 @@ export const MainPanel = () => {
         .catch((e) => console.log(e));
     }
     if (event == 'set') {
-      console.log(descriptor?.to?._obj);
+   
 
       // IsApplied(descriptor.layerID[0]).then((result: any[]) => {});
 
@@ -228,7 +232,6 @@ export const MainPanel = () => {
   }, []);
   useEffect(() => {
     const newcard = Object.fromEntries(Object.keys(showcard).map((key) => [key, false]));
-
     setHideAllCard(newcard);
   }, [showcard]);
   useEffect(() => {}, [hideallCard]);
@@ -320,7 +323,7 @@ export const MainPanel = () => {
 
   function isImageDropdown(card_title, card_item_object) {
     if (!card_item_object || card_item_object?.length < 2) return false;
-    return ImageLoaderNode.includes(card_title) && card_item_object[1]?.image_upload != null;
+    return globalConfig.imageloader_node.includes(card_title);
   }
 
   const otherNode = (card_item_object: any, card_item_name: string, card_item_content: any, keyname: string, value: string) => {
@@ -468,7 +471,7 @@ export const MainPanel = () => {
      
               
               */}
-              <div className={`${showcard[keyname] ? 'block' : 'hidden'}`}>
+              <div className={`${showcard[keyname] || showcard[keyname] == null ? 'block' : 'hidden'}`}>
                 {Object.keys(WF[keyname].inputs).map((value, child_index) => {
                   const card_item_name = value;
                   const card_item_content = WF[keyname].inputs[value];
@@ -479,22 +482,16 @@ export const MainPanel = () => {
                   loadDefaultValue(index, child_index, card_item_content, card_item_object[0], is_image_dropdown);
 
                   if (typeof card_item_content !== 'object') {
+                    const image_path = items[items?.findIndex((e) => e.id == index && e.sub_id == child_index)];
+
                     return (
                       <div key={child_index}>
                         {Array.isArray(card_item_object[0]) ? (
                           <div className="flex flex-col">
-                            {items[items?.findIndex((e) => e.id == index && e.sub_id == child_index)]?.path && (
+                            {image_path?.path && (
                               <div className="flex flex-col imageview">
                                 <div className="my-0 rounded-sm overflow-hidden w-full h-40 align-middle self-center relative">
-                                  <img
-                                    className="object-contain h-48 w-full"
-                                    src={
-                                      items &&
-                                      `file:\\\\${items[items?.findIndex((e) => e.id == index && e.sub_id == child_index)]?.path}\\${
-                                        items[items?.findIndex((e) => e.id == index && e.sub_id == child_index)]?.name
-                                      }`
-                                    }
-                                  />
+                                  <img className="object-contain h-48 w-full" src={items && `file:\\\\${image_path?.path}\\${image_path?.name}`} />
                                 </div>
                               </div>
                             )}
@@ -502,9 +499,9 @@ export const MainPanel = () => {
                               <DropDrownPicker
                                 showSelector={true}
                                 horizontalmode={false}
-                                selectedIndex={items[items.findIndex((e) => e.id == index && e.sub_id == child_index)]?.item_index || 0}
+                                selectedIndex={image_path?.item_index || 0}
                                 overrideClass="grow"
-                                title={card_item_name}
+                                // title={card_item_name}
                                 items={card_item_object[0]}
                                 onChange={(e) => {
                                   changeValueDropDown(index, child_index, e.target.value, card_item_object[0]);
@@ -538,6 +535,22 @@ export const MainPanel = () => {
                                               }
                                             });
                                           }
+                                        }
+                                      });
+                                    }}
+                                  />
+                                  <HeroIcons
+                                    className="mr-2"
+                                    which="person"
+                                    onClick={(e) => {
+                                      saveSelectedLayerToImage(ioFolder, title, true).then((result) => {
+                                        if (result) {
+                                          setTimeout(() => {
+                                            card_item_object[0].push(result);
+                                            changeValueDropDown(index, child_index, result, card_item_object[0]);
+                                            handleInputChange(keyname, value, result);
+                                            setWhichImageCard({title: title, filename: result});
+                                          }, 300);
                                         }
                                       });
                                     }}
@@ -634,7 +647,6 @@ export const MainPanel = () => {
         }
 
         const result = await fetchObjectInfo(_class_type);
-
         let contents = result[_class_type]['input']['required'];
         const optional = result[_class_type]['input']['optional'];
         if (optional !== undefined) {
@@ -709,20 +721,6 @@ export const MainPanel = () => {
               }}
             />
           )}
-          {/* {workflowFiles?.map((value, index) => {
-            return (
-              <div
-                key={index}
-                className={`px-0.5 py-0 cursor-pointer ${activeTab == index ? 'text-red-500' : 'text-white'} hover:text-yellow-300`}
-                onClick={() => {
-                  setActiveTab(index);
-                  handleOnClick(value);
-                }}
-              >
-                {value.name.replace('.json', '').toUpperCase()}
-              </div>
-            );
-          })} */}
         </div>
 
         <div className="content-card overflow-y-auto h-full">{WF && cardInfo && !status && renderCard()}</div>

@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 
-import { Textarea } from '../components';
-import { debounce } from 'lodash';
-import { calculateNested } from '../utils/StringUtils';
+import {Textarea} from '../components';
+import {debounce} from 'lodash';
+import {calculateNested} from '../utils/StringUtils';
 type Props = {
   value?: string;
   type?: string;
@@ -12,14 +12,14 @@ type Props = {
 };
 
 export default function MTextArea(props: Props) {
-  const [lineCount, setLineCount] = useState(3);
+  const [lineCount, setLineCount] = useState(5);
 
   const def = 16;
 
   const filterNegative = ['negative', 'Negative', 'neg', 'Neg', 'negative prompt'];
   return (
     <div className={`${props?.className} rounded-md overflow-hidden `}>
-      <div className={`p-2 relative flex`}>
+      {/* <div className={`p-2 relative flex`}>
         <span
           className={
             `${filterNegative.includes(props?.type) ? 'bg-red-700' : 'bg-blue-700'}` +
@@ -28,14 +28,14 @@ export default function MTextArea(props: Props) {
         >
           {props?.type || 'what is this?'}
         </span>
-      </div>
+      </div> */}
       <Textarea
         quiet={true}
         onBlur={(e) => {
           const text = e.target.value;
           props?.onChange(text.trim().replaceAll('\r', '\n'));
         }}
-        style={{ height: `${lineCount * def + 6}px`, minHeight: '48px' }}
+        style={{height: `${lineCount * def + 6}px`, minHeight: '48px'}}
         onInput={(e) => {
           let textLen = e.target.value.split('\r');
           const add = calculateNested(textLen);

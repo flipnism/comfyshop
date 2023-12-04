@@ -10,6 +10,7 @@ type Props = {
   onChange?: (e: DropdownEvent) => void;
   items?: string[];
   title?: string;
+  disabled?: boolean;
   selectedIndex: number;
   DDWidth?: string;
   overrideClass?: string;
@@ -56,6 +57,7 @@ export default function DropDrownPicker(props: Props) {
         <Dropdown
           placeholder={props?.items[selIndex]}
           size="S"
+          disabled={props.disabled || undefined}
           selectedIndex={selIndex}
           className={`${props?.which} ${props?.horizontalmode ? (props?.DDWidth ? props?.DDWidth : 'w-3/4') : 'w-full'}`}
           onChange={props?.onChange}

@@ -68,6 +68,45 @@
           "theme": ["lightest", "light"]
         }
       ]
+    },
+    {
+      "type": "panel",
+      "id": "quickpanel",
+      "label": {
+        "default": "ComfyShop QuickPanel"
+      },
+      "minimumSize": {
+        "width": 10,
+        "height": 10
+      },
+      "maximumSize": {
+        "width": 1500,
+        "height": 1500
+      },
+      "preferredDockedSize": {
+        "width": 350,
+        "height": 300
+      },
+      "preferredFloatingSize": {
+        "width": 785,
+        "height": 150
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/icon.png",
+          "scale": [1, 2],
+          "theme": ["darkest", "dark", "medium"]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/icon.png",
+          "scale": [1, 2],
+          "theme": ["lightest", "light"]
+        }
+      ]
     }
   ],
   "icons": [

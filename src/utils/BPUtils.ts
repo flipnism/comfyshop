@@ -1,7 +1,7 @@
 const fs = require('uxp').storage.localFileSystem;
 import {core, app, action, constants, imaging} from 'photoshop';
-import {BOUNDS} from '../interfaces/types';
-
+import {BOUNDS, CUSTOMSCRIPT} from '../interfaces/types';
+import Sval from 'sval';
 export const saveAsPng = (path: any) => {
   return {
     _obj: 'save',
@@ -206,7 +206,7 @@ export function placeImageOnCanvas(imagename: string, outputFolder: any, selecti
   );
 }
 
-export async function saveSelectedLayerToImage(IOFolder: any, node_name?: string) {
+export async function saveSelectedLayerToImage(IOFolder: any, node_name?: string, single_only?: boolean) {
   // const notselected = bounds.left == 0 && bounds.right == 0;
   // if (notselected) return null;
   return await core.executeAsModal(
@@ -217,7 +217,7 @@ export async function saveSelectedLayerToImage(IOFolder: any, node_name?: string
         documentID: documentID,
         name: 'saveSelectedLayerToImage',
       });
-      await croppedSelectedLayer();
+      if (!single_only) await croppedSelectedLayer();
       let selectedLayer = app.activeDocument.activeLayers[0];
       selectedLayer;
       let rand_name = generateRandomName(null, true);
@@ -419,4 +419,29 @@ export async function croppedSelectedLayer() {
     },
     {'commandName': 'crop selected layer'}
   );
+}
+
+export async function executeCustomScripts(value: CUSTOMSCRIPT, folder: any, intepreter: Sval) {
+  await core
+    .executeAsModal(
+      async (context, desc) => {
+        if (value?.executable) {
+          const script = await folder.getEntry(value.script);
+
+          const read_script = await script.read();
+          intepreter.run(`    
+          "use strict";
+          async function myCode(){
+
+            ${read_script}
+          }
+          exports.returnValue = myCode();
+          `);
+        } else {
+          await app.batchPlay(value.func, {}).catch((e) => console.log(e));
+        }
+      },
+      {commandName: 'custom script'}
+    )
+    .catch((e) => console.log(e));
 }

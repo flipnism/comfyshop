@@ -12,6 +12,8 @@ type Props = {
   onChange?: (e: Spectrum.TextfieldEvent) => void;
   onInput?: (e: Spectrum.TextfieldEvent) => void;
   onKeyDown?: (e: KeyboardEvent) => void; // Add this prop
+  onMouseLeave?: (e: Spectrum.TextfieldEvent) => void;
+  onMouseEnter?: (e: Spectrum.TextfieldEvent) => void;
   className?: string;
   disabled?: boolean;
   invalid?: boolean;
@@ -62,6 +64,25 @@ export default function Textfield(props: Props) {
       ref.current?.removeEventListener('change', dispatchChange);
     };
   }, [props.onChange]);
+  useEffect(() => {
+    const dispatchChange = (e: Event) => props.onMouseLeave?.(e as Spectrum.TextfieldEvent);
+
+    ref.current?.addEventListener('mouseleave', dispatchChange);
+    return () => {
+      ref.current?.removeEventListener('mouseleave', dispatchChange);
+    };
+  }, [props.onMouseLeave]);
+
+  useEffect(() => {
+    const dispatchInput = (e: Event) => {
+      ref.current?.focus();
+    };
+
+    ref.current?.addEventListener('mouseenter', dispatchInput);
+    return () => {
+      ref.current?.removeEventListener('mouseenter', dispatchInput);
+    };
+  }, [props.onMouseEnter]);
 
   useEffect(() => {
     const dispatchInput = (e: Event) => props.onInput?.(e as Spectrum.TextfieldEvent);
@@ -91,7 +112,7 @@ export default function Textfield(props: Props) {
       placeholder={props.placeholder}
       quiet={props.quiet || undefined}
       type={props.type}
-      size="s"
+      size="S"
       valid={props.valid || undefined}
       value={props.value}
     >

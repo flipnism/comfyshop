@@ -1,7 +1,9 @@
 import React from 'react';
-import { RT, ControllerProps, MenuItems, ControllerComponent } from '../controllers/PanelController';
-import { CommandController } from '../controllers/CommandController';
-import { MainPanel } from './MainPanel';
+import {RT, ControllerProps, MenuItems, ControllerComponent} from '../controllers/PanelController';
+import {CommandController} from '../controllers/CommandController';
+import {MainPanel} from './MainPanel';
+import {MainPanelv2} from './MainPanelv2';
+import {QuickPanel} from './QuickPanel';
 export const COMMAND_IDS = Object.freeze({
   SHOW_ABOUT: 'showAbout',
 });
@@ -10,7 +12,7 @@ export type CommandMap = Record<CommandId, CommandController>;
 type InvokeFn = (controllers: CommandMap) => RT;
 
 export type Panels = Omit<ControllerProps, 'menuItems'> & {
-  menuItems?: (Omit<MenuItems, 'oninvoke'> & { oninvoke: InvokeFn })[];
+  menuItems?: (Omit<MenuItems, 'oninvoke'> & {oninvoke: InvokeFn})[];
 } & {
   component: ControllerComponent;
 };
@@ -18,8 +20,12 @@ export type Panels = Omit<ControllerProps, 'menuItems'> & {
 export const Panels: Readonly<Panels[]> = [
   {
     id: 'mainpanel',
-    component: () => <MainPanel />,
-
-    menuItems: [{ id: 'reloadme', label: 'Reload Plugin', enabled: true, checked: false, oninvoke: () => location.reload() }],
+    component: () => <MainPanelv2 />,
+    menuItems: [{id: 'reloadme', label: 'Reload Plugin', enabled: true, checked: false, oninvoke: () => location.reload()}],
+  },
+  {
+    id: 'quickpanel',
+    component: () => <QuickPanel />,
+    menuItems: [{id: 'reloadme2', label: 'Reload QuickPanel', enabled: true, checked: false, oninvoke: () => location.reload()}],
   },
 ];

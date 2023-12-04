@@ -7,7 +7,7 @@ type Props = {
   onChange?: (e: number) => void;
 };
 type MODE = 'random' | 'fixed' | 'increment';
-export const SeedWidget = forwardRef((props: Props, ref) => {
+export const SeedWidgetv2 = (props: Props) => {
   function generateSeed() {
     const value = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
     setVal((val) => value.toString());
@@ -33,7 +33,6 @@ export const SeedWidget = forwardRef((props: Props, ref) => {
   useEffect(() => {
     if (val) {
       props?.onChange(Number(val));
-     
     }
   }, [val]);
 
@@ -41,9 +40,6 @@ export const SeedWidget = forwardRef((props: Props, ref) => {
     setVal((val) => props?.value);
   }, [props?.value]);
 
-  useImperativeHandle(ref, () => ({
-    updateSeed,
-  }));
   return (
     <div className="flex flex-col w-full">
       <Label className="w-fill" slot="label">
@@ -73,4 +69,4 @@ export const SeedWidget = forwardRef((props: Props, ref) => {
       </div>
     </div>
   );
-});
+};

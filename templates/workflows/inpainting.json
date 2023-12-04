@@ -1,45 +1,37 @@
 {
-  "140": {
-    "inputs": {
-      "value": [
-        "161",
-        0
-      ]
-    },
-    "show": false,
-    "title": "ImpactImageInfo",
-    "class_type": "ImpactImageInfo"
-  },
-  "141": {
+  "45": {
     "inputs": {
       "ckpt_name": "juggernaut_aftermath.safetensors",
-      "config_name": "juggernaut_aftermath.yaml",
+      "config_name": "Default",
       "vae_name": "juggernaut_TRCVAE.safetensors",
       "clip_skip": -1,
       "lora1_name": "lcm_sd15_pytorch_lora_weights.safetensors",
       "lora1_model_strength": 1,
       "lora1_clip_strength": 1,
       "lora2_name": "None",
-      "lora2_model_strength": 0.68,
+      "lora2_model_strength": 1,
       "lora2_clip_strength": 1,
       "lora3_name": "None",
       "lora3_model_strength": 1,
       "lora3_clip_strength": 1,
       "positive": [
-        "197",
+        "48",
         0
       ],
       "positive_token_normalization": "none",
       "positive_weight_interpretation": "comfy",
-      "negative": "(embedding:JuggernautNegative-neg:1.2), person, face",
+      "negative": [
+        "47",
+        0
+      ],
       "negative_token_normalization": "none",
       "negative_weight_interpretation": "comfy",
       "empty_latent_width": [
-        "140",
+        "58",
         2
       ],
       "empty_latent_height": [
-        "140",
+        "58",
         1
       ],
       "batch_size": 1,
@@ -49,7 +41,7 @@
     "title": "pipeLoader",
     "class_type": "ttN pipeLoader"
   },
-  "142": {
+  "46": {
     "inputs": {
       "lora_name": "None",
       "lora_model_strength": 1,
@@ -58,47 +50,69 @@
       "factor": 2,
       "crop": "disabled",
       "sampler_state": "Sample",
-      "steps": 4,
-      "cfg": 1.3,
+      "add_noise": "enable",
+      "steps": 6,
+      "cfg": 1,
       "sampler_name": "lcm",
       "scheduler": "sgm_uniform",
-      "denoise": 1,
+      "start_at_step": 0,
+      "end_at_step": 4,
+      "return_with_leftover_noise": "enable",
       "image_output": "Preview",
       "save_prefix": "ComfyUI",
-      "seed": [
-        "169",
+      "noise_seed": [
+        "80",
         0
       ],
       "pipe": [
-        "141",
+        "45",
         0
       ],
       "optional_model": [
-        "145",
+        "69",
         0
       ],
       "optional_positive": [
-        "143",
+        "54",
         0
       ]
     },
     "show": false,
-    "title": "pipeKSampler",
-    "class_type": "ttN pipeKSampler"
+    "title": "pipeKSamplerAdvanced",
+    "class_type": "ttN pipeKSamplerAdvanced"
   },
-  "143": {
+  "47": {
     "inputs": {
-      "strength": 1,
+      "String": "embedding:JuggernautNegative-neg"
+    },
+    "show": true,
+    "title": "Negative",
+    "class_type": "String"
+  },
+  "48": {
+    "inputs": {
+      "String": "portrait of a man, blurred crowd in the background"
+    },
+    "show": true,
+    "title": "Positive",
+    "class_type": "String"
+  },
+  "54": {
+    "inputs": {
+      "strength": [
+        "91",
+        0
+      ],
       "conditioning": [
-        "141",
+        "45",
         2
       ],
       "control_net": [
-        "144",
+        "55",
         0
       ],
       "image": [
-        "146",
+        "57",
         0
       ]
     },
@@ -106,7 +120,7 @@
     "title": "Apply ControlNet",
     "class_type": "ControlNetApply"
   },
-  "144": {
+  "55": {
     "inputs": {
       "control_net_name": "control_v11p_sd15_inpaint.pth"
     },
@@ -114,27 +128,14 @@
     "title": "Load ControlNet Model",
     "class_type": "ControlNetLoader"
   },
-  "145": {
-    "inputs": {
-      "sampling": "lcm",
-      "zsnr": false,
-      "model": [
-        "147",
-        0
-      ]
-    },
-    "show": false,
-    "title": "ModelSamplingDiscrete",
-    "class_type": "ModelSamplingDiscrete"
-  },
-  "146": {
+  "57": {
     "inputs": {
       "image": [
-        "161",
+        "59",
         0
       ],
       "mask": [
-        "161",
+        "59",
         1
       ]
     },
@@ -142,7 +143,77 @@
     "title": "Inpaint Preprocessor",
     "class_type": "InpaintPreprocessor"
   },
-  "147": {
+  "58": {
+    "inputs": {
+      "value": [
+        "59",
+        0
+      ]
+    },
+    "show": false,
+    "title": "ImpactImageInfo",
+    "class_type": "ImpactImageInfo"
+  },
+  "59": {
+    "inputs": {
+      "image": "BaseImage_d8k66.png",
+      "value": 512,
+      "upload": "image"
+    },
+    "show": true,
+    "title": "BaseImage",
+    "class_type": "LoadResizeImageMask512"
+  },
+  "63": {
+    "inputs": {
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "upscale_method": "None",
+      "factor": 2,
+      "crop": "disabled",
+      "sampler_state": "Sample",
+      "add_noise": "enable",
+      "steps": 6,
+      "cfg": 1,
+      "sampler_name": "lcm",
+      "scheduler": "sgm_uniform",
+      "start_at_step": 3,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "noise_seed": [
+        "46",
+        8
+      ],
+      "pipe": [
+        "46",
+        0
+      ],
+      "optional_latent": [
+        "46",
+        4
+      ]
+    },
+    "show": false,
+    "title": "pipeKSamplerAdvanced",
+    "class_type": "ttN pipeKSamplerAdvanced"
+  },
+  "69": {
+    "inputs": {
+      "sampling": "lcm",
+      "zsnr": false,
+      "model": [
+        "70",
+        0
+      ]
+    },
+    "show": false,
+    "title": "ModelSamplingDiscrete",
+    "class_type": "ModelSamplingDiscrete"
+  },
+  "70": {
     "inputs": {
       "weight": 0.8,
       "noise": 0.33,
@@ -150,27 +221,27 @@
       "start_at": 0,
       "end_at": 1,
       "ipadapter": [
-        "148",
+        "71",
         0
       ],
       "clip_vision": [
-        "149",
+        "73",
         0
       ],
       "image": [
-        "151",
+        "72",
         0
       ],
       "model": [
-        "141",
-        1
+        "93",
+        0
       ]
     },
     "show": false,
     "title": "Apply IPAdapter",
     "class_type": "IPAdapterApply"
   },
-  "148": {
+  "71": {
     "inputs": {
       "ipadapter_file": "ip-adapter-plus_sd15.bin"
     },
@@ -178,30 +249,13 @@
     "title": "Load IPAdapter Model",
     "class_type": "IPAdapterModelLoader"
   },
-  "149": {
-    "inputs": {
-      "clip_name": "model_sd15_ipadapter_plus_clipvision.safetensors"
-    },
-    "show": false,
-    "title": "Load CLIP Vision",
-    "class_type": "CLIPVisionLoader"
-  },
-  "150": {
-    "inputs": {
-      "image": "d3bbdcff8e6f4a20a6ed43666422cd8e.jpg",
-      "choose file to upload": "image"
-    },
-    "show": true,
-    "title": "ColorSchemeImage",
-    "class_type": "LoadImage"
-  },
-  "151": {
+  "72": {
     "inputs": {
       "interpolation": "LANCZOS",
       "crop_position": "center",
       "sharpening": 0,
       "image": [
-        "150",
+        "74",
         0
       ]
     },
@@ -209,68 +263,79 @@
     "title": "Prepare Image For Clip Vision",
     "class_type": "PrepImageForClipVision"
   },
-  "153": {
+  "73": {
     "inputs": {
-      "mask": [
-        "154",
-        0
-      ]
+      "clip_name": "model_sd15_ipadapter_plus_clipvision.safetensors"
     },
     "show": false,
-    "title": "Convert Mask to Image",
-    "class_type": "MaskToImage"
+    "title": "Load CLIP Vision",
+    "class_type": "CLIPVisionLoader"
   },
-  "154": {
+  "74": {
     "inputs": {
-      "mask": [
-        "161",
-        1
-      ]
-    },
-    "show": false,
-    "title": "InvertMask",
-    "class_type": "InvertMask"
-  },
-  "161": {
-    "inputs": {
-      "image": "Load Image_piapi.png",
-      "value": 512,
-      "choose file to upload": "image"
+      "image": "bgimage_ (16).jpg",
+      "upload": "image"
     },
     "show": true,
-    "title": "Load and Resize Image with Mask [512]",
-    "class_type": "LoadResizeImageMask512"
+    "title": "BGImage",
+    "class_type": "LoadImage"
   },
-  "169": {
+  "80": {
     "inputs": {
-      "seed": 200862599688922
+      "seed": 8276353770645645
     },
     "show": true,
     "title": "Seed",
-    "class_type": "CR Seed"
+    "class_type": "ttN seed"
   },
-  "182": {
+  "87": {
     "inputs": {
-      "filename_prefix": "INPAINT[MASKED]",
+      "filename_prefix": "__inpainting",
       "images": [
-        "183",
-        0
+        "63",
+        7
       ]
     },
     "show": false,
     "title": "Save Image",
     "class_type": "SaveImage"
   },
-  "183": {
+  "91": {
+    "inputs": {
+      "Value": 1
+    },
+    "show": true,
+    "title": "Painting Strength",
+    "class_type": "Float"
+  },
+  "93": {
+    "inputs": {
+      "lora_name": "more_details.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "45",
+        1
+      ],
+      "clip": [
+        "45",
+        6
+      ]
+    },
+    "show": false,
+    "title": "Load LoRA",
+    "class_type": "LoraLoader"
+  },
+  "95": {
     "inputs": {
       "force_resize_width": 0,
       "force_resize_height": 0,
       "image": [
-        "142",
+        "63",
         7
       ],
       "mask": [
-        "153",
+        "99",
         0
       ]
     },
@@ -278,29 +343,38 @@
     "title": "Cut By Mask",
     "class_type": "Cut By Mask"
   },
-  "197": {
+  "96": {
     "inputs": {
-      "prompt": ""
+      "mask": [
+        "59",
+        1
+      ]
     },
     "show": false,
-    "title": "📝 CR Prompt Text",
-    "class_type": "CR Prompt Text"
+    "title": "Convert Mask to Image",
+    "class_type": "MaskToImage"
   },
-  "199": {
+  "99": {
     "inputs": {
-      "filename_prefix": "INPAINT[MASKED]",
+      "image": [
+        "96",
+        0
+      ]
+    },
+    "show": false,
+    "title": "Invert Image",
+    "class_type": "ImageInvert"
+  },
+  "100": {
+    "inputs": {
+      "filename_prefix": "__inpaintingmasked",
       "images": [
-        "142",
-        7
+        "95",
+        0
       ]
     },
     "show": false,
     "title": "Save Image",
     "class_type": "SaveImage"
-  }
-},
-    "class_type": "SaveImage"
-  }
-}aveImage"
   }
 }
