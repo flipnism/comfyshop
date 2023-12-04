@@ -1,7 +1,7 @@
 {
   "337": {
     "inputs": {
-      "image": "BaseImage_q585s.png",
+      "image": "BaseImage_pk7aw.png",
       "choose file to upload": "image"
     },
     "show": true,
@@ -26,7 +26,7 @@
       "facedetection": "retinaface_resnet50",
       "codeformer_fidelity": 1,
       "centerface_only": true,
-      "upscale": false,
+      "upscale": true,
       "upscale_then_restore": true,
       "upscale_model_name": "RealESRGAN_x4.pth",
       "image": [

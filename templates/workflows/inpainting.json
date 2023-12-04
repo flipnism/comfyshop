@@ -156,7 +156,7 @@
   },
   "59": {
     "inputs": {
-      "image": "BaseImage_d8k66.png",
+      "image": "BaseImage_ue8cn.png",
       "value": 512,
       "upload": "image"
     },
@@ -273,7 +273,7 @@
   },
   "74": {
     "inputs": {
-      "image": "bgimage_ (16).jpg",
+      "image": "bgimage_ (15).jpg",
       "upload": "image"
     },
     "show": true,
@@ -282,7 +282,7 @@
   },
   "80": {
     "inputs": {
-      "seed": 8276353770645645
+      "seed": 8731190471619643
     },
     "show": true,
     "title": "Seed",

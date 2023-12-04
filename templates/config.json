@@ -1,4 +1,6 @@
 {
+  "qp_generator_model": "juggernaut_aftermath.safetensors",
+  "qp_inpainting_model": "epicrealism_pureEvolutionV5-inpainting.safetensors",
   "imageloader_node": ["LoadImage", "BGImage", "Load Image", "Baseimage", "LoadResizeImageMask", "LoadResizeImageMask512", "Image"],
   "quickpanel_size": [
     [512, 512],

@@ -50,6 +50,9 @@ export type InlineDialogContent = {
 };
 
 export type GLOBALCONFIG = {
+  qp_generator_model: string;
+  qp_inpainting_model: string;
+  quickpanel_size: [];
   imageloader_node: string[];
 };
 export type CUSTOMSCRIPT = {

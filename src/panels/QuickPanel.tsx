@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ActionButton, Button, Label, Textarea} from '../components';
 import {HeroIcons} from '../interfaces/HeroIcons';
 import {PickFolderFor} from '../utils/Token';
-import {CUSTOMSCRIPT} from '../interfaces/types';
+import {CUSTOMSCRIPT, GLOBALCONFIG} from '../interfaces/types';
 import {executeCustomScripts, placeImageOnCanvas} from '../utils/BPUtils';
 import Sval from 'sval';
 import {generateImage, inpaintCUrrentSelectedLayer} from '../utils/QuickPanelHelper';
@@ -13,12 +13,10 @@ import {executed, executing, output_images, progress, server_type, status} from 
 import {DropdownStyleChooser, STYLE} from '../customcomponents/DropdownStyleChooser';
 import {DDItems, DropdownPickerv2} from '../customcomponents/DropdownPickerv2';
 import {TextAreav2} from '../customcomponents/TextAreav2';
-import {NodeComponent} from '../customcomponents/NodeComponent';
 
 export const QuickPanel = () => {
   const TEMPLATE = 'TEMPLATE_FOLDER';
   const [uuid, setUuid] = useState(uuidv4());
-
   const [customScripts, setCustomScripts] = useState<CUSTOMSCRIPT[]>(null);
   const [customScriptsFolder, setCustomScriptsFolder] = useState(null);
   const [customScriptTooltip, setCustomScriptTooltip] = useState('');
@@ -31,6 +29,8 @@ export const QuickPanel = () => {
   const [stylesFolder, setStylesFolder] = useState(null);
   const [imgSize, setImgSize] = useState([[512, 512]]);
   const [promptStyle, setPromptStyle] = useState<STYLE>(null);
+  const [QPImageGenerator, setQPImageGenerator] = useState(null);
+  const [globalConfig, setGlobalConfig] = useState<GLOBALCONFIG>(null);
   const interpreter: Sval = new Sval({
     ecmaVer: 9,
     sandBox: true,
@@ -122,10 +122,12 @@ export const QuickPanel = () => {
   async function fetchRootFolder(rootfolder) {
     const customscript_folder = await rootfolder.getEntry('customscript');
     const config_file = await rootfolder.getEntry('config.json');
+    const qp_image_generator = await rootfolder.getEntry('image_generator.json');
     const comfyui_root = await rootfolder.getEntry('ComfyUI');
     const styles = await rootfolder.getEntry('styles');
     const input = await comfyui_root?.getEntry('input');
     const output = await comfyui_root?.getEntry('output');
+    setQPImageGenerator(qp_image_generator);
     setStylesFolder(styles);
     setIoFolder({input: input, output: output});
     setCustomScriptsFolder(customscript_folder);
@@ -147,7 +149,8 @@ export const QuickPanel = () => {
       // })
     );
     setCustomScripts(scrpts);
-    const config = JSON.parse(await config_file.read());
+    const config: GLOBALCONFIG = JSON.parse(await config_file.read());
+    setGlobalConfig(config);
     setImgSize(config.quickpanel_size);
   }
 
@@ -168,7 +171,7 @@ export const QuickPanel = () => {
   }, []);
 
   function HandleGenerate() {
-    generateImage(promptStyle, promptText, imgSize[imageSize], uuid);
+    generateImage(QPImageGenerator, globalConfig, promptStyle, promptText, imgSize[imageSize], uuid);
   }
   function HandleInpainting() {
     inpaintCUrrentSelectedLayer(ioFolder, promptText, uuid);

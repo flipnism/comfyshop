@@ -1,22 +1,25 @@
 {
-  "folders": [
-	{
-		"path": ".."
-	},
-	{
-		"path": "../../comfyui-photoshop"
-	},
-	{
-		"path": "C:/ComfyPSD-backend/custom_nodes/julnodes"
-	},
-	{
-		"path": "C:/ComfyPSD-backend/custom_nodes/ComfyUI-ricing"
-	},
-	{
-		"path": "C:/ComfyPSD-backend/custom_nodes/comfyui-reactor-node"
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../comfyui-photoshop"
+		},
+		{
+			"path": "C:/ComfyPSD-backend/custom_nodes/julnodes"
+		},
+		{
+			"path": "C:/ComfyPSD-backend/custom_nodes/ComfyUI-ricing"
+		},
+		{
+			"path": "C:/ComfyPSD-backend/custom_nodes/comfyui-reactor-node"
+		},
+		{
+			"path": "C:/ComfyPSD-backend/custom_nodes/comfyshop-helper"
+		}
+	],
+	"settings": {
+		"editor.inlineSuggest.showToolbar": "always"
 	}
-],
-  "settings": {
-    "editor.inlineSuggest.showToolbar": "always"
-  }
 }
