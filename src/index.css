@@ -46,19 +46,21 @@
   font-family: 'Anton';
   font-weight: 400;
   font-size: 14px;
-  color: #323232;
-  background: #838383;
+  color: #ffffff;
+  background: #e62e00;
 }
 .enabled:hover {
-  background: #534747;
+  background: #ff8800;
 }
 .enabled:active {
-  background: #9e6565;
+  background: rgb(255, 208, 0);
+  color: #323232;
 }
 .disabled {
   cursor: none;
   pointer-events: none;
-  color: #444;
+  color: #313131;
+  color: #727272;
 }
 
 .tab-main {

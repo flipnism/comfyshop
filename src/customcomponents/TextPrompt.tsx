@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {Textarea, Textfield} from '../components';
+import {Textarea} from '../components';
 
 export type Props = {
+  showTextPanel?: boolean;
   disabled?: boolean;
   title: string;
   content: string;
   onChange: (e: string) => void;
 };
 
-export const TextAreav2 = (props: Props) => {
-  const [visible, setVisible] = useState(false);
+export const TextPrompt = (props: Props) => {
+  const [visible, setVisible] = useState(props?.showTextPanel || false);
   const [currentValue, setCurrentValue] = useState(props?.content);
   useEffect(() => {
     if (currentValue) props?.onChange(currentValue);
   }, [currentValue]);
   return (
-    <div className="main-dropdown grow w-5/6">
+    <div className="main-dropdown w-full">
       <div
         className="placeholder flex flex-row justify-between w-full px-2 py-1 cursor-pointer box-bg text-white rounded-xl"
         onClick={() => {
-          if (!props?.disabled) setVisible(!visible);
+          if (!props?.disabled && !props?.showTextPanel) setVisible(!visible);
         }}
       >
         {!visible && (
@@ -32,8 +33,9 @@ export const TextAreav2 = (props: Props) => {
           <Textarea
             onMouseLeave={(e) => {
               setCurrentValue(e.target.value);
-              setVisible(!visible);
+              if (!props?.showTextPanel) setVisible(!visible);
             }}
+            value={currentValue}
             className="w-full"
             quiet={true}
             onInput={(e) => {

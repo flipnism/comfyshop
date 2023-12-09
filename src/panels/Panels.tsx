@@ -1,9 +1,10 @@
 import React from 'react';
 import {RT, ControllerProps, MenuItems, ControllerComponent} from '../controllers/PanelController';
 import {CommandController} from '../controllers/CommandController';
-import {MainPanel} from './MainPanel';
+
 import {MainPanelv2} from './MainPanelv2';
 import {QuickPanel} from './QuickPanel';
+import {CustomScriptPanel} from './CustomScriptPanel';
 export const COMMAND_IDS = Object.freeze({
   SHOW_ABOUT: 'showAbout',
 });
@@ -27,5 +28,10 @@ export const Panels: Readonly<Panels[]> = [
     id: 'quickpanel',
     component: () => <QuickPanel />,
     menuItems: [{id: 'reloadme2', label: 'Reload QuickPanel', enabled: true, checked: false, oninvoke: () => location.reload()}],
+  },
+  {
+    id: 'customscriptpanel',
+    component: () => <CustomScriptPanel />,
+    menuItems: [{id: 'reloadme3', label: 'Reload CustomScript Panel', enabled: true, checked: false, oninvoke: () => location.reload()}],
   },
 ];

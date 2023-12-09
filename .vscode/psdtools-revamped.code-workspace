@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "C:/ComfyPSD-backend/custom_nodes/comfyshop-helper"
+		},
+		{
+			"path": "../../thumbnail-maker"
 		}
 	],
 	"settings": {

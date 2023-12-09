@@ -1,7 +1,7 @@
 {
   "337": {
     "inputs": {
-      "image": "BaseImage_pk7aw.png",
+      "image": "BaseImage_u97o9.png",
       "choose file to upload": "image"
     },
     "show": true,
@@ -25,10 +25,10 @@
       "model_name": "GFPGANv1.4.pth",
       "facedetection": "retinaface_resnet50",
       "codeformer_fidelity": 1,
-      "centerface_only": true,
-      "upscale": true,
-      "upscale_then_restore": true,
-      "upscale_model_name": "RealESRGAN_x4.pth",
+      "centerface_only": false,
+      "upscale": false,
+      "upscale_then_restore": false,
+      "upscale_model_name": "4x-UltraSharp.pth",
       "image": [
         "337",
         0

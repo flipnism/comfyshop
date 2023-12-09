@@ -1,8 +1,31 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const version = '0.0.1';
+//const TerserPlugin = require("terser-webpack-plugin");
 module.exports = (_env, arg) => {
+
   return {
+
+    // optimization: {
+    //   minimize: true,
+    //   minimizer: [new TerserPlugin({
+    //     extractComments: true,
+    //     parallel: true,
+    //     terserOptions: {
+    //       mangle: false,
+    //       compress: {
+    //         conditionals: false,
+    //         drop_console: true,
+    //         drop_debugger: true,
+    //         comparisons: false,
+    //         collapse_vars: false,
+    //         booleans: false,
+    //         inline: false,
+    //         keep_classnames: false
+    //       }
+    //     }
+    //   })]
+    // },
     entry: './src/index.tsx',
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -47,6 +70,7 @@ module.exports = (_env, arg) => {
         },
       ],
     },
+
 
     plugins: [
       new CopyPlugin({
